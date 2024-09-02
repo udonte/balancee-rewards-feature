@@ -36,23 +36,24 @@ The Rewards Summary Page is part of the Balanceè platform, where users can earn
 
 ## Project Structure
 
-src/
-│
-├── components/
-│ ├── EarningsOverview.jsx
-│ ├── CashbackHistory.jsx
-│ ├── CashoutOptions.jsx
-│ └── Modal.jsx
-│
-├── data/
-│ └── mockData.js
-│
-├── pages/
-│ └── RewardsSummary.jsx
-│
-├── App.jsx
-├── main.jsx
-└── index.css
+- src/
+
+- │
+- ├── components/
+- │ ├── EarningsOverview.jsx
+- │ ├── CashbackHistory.jsx
+- │ ├── CashoutOptions.jsx
+- │ └── Modal.jsx
+- │
+- ├── data/
+- │ └── mockData.js
+- │
+- ├── pages/
+- │ └── RewardsSummary.jsx
+- │
+- ├── App.jsx
+- ├── main.jsx
+- └── index.css
 
 - components/: Contains reusable React components for the Rewards Summary page.
 - data/: Contains mock data for simulating API responses.
