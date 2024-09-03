@@ -9,10 +9,16 @@ import { mockEarnings, mockTransactions } from "../data/mock";
 
 const RewardsSummary = () => {
   const [earnings, setEarnings] = useState({});
+  const [currentBalance, setCurrentBalance] = useState(
+    mockEarnings.currentBalance
+  ); // Mock balance
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+
+  const [cashoutSuccess, setCashoutSuccess] = useState(false);
+
+  console.log(currentBalance);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,18 +31,17 @@ const RewardsSummary = () => {
     fetchData();
   }, []);
 
-  const handleCashout = (method) => {
-    setModalMessage(
-      `Cashout successful via ${
-        method === "direct" ? "Direct Cashout" : "Promo Code"
-      }!`
-    );
-    setIsModalVisible(true);
-
-    // Automatically close the modal after 5 seconds
-    setTimeout(() => {
-      setIsModalVisible(false);
-    }, 3000);
+  const handleCashout = (method, amount, promoCode) => {
+    if (method === "direct") {
+      // Handle direct cashout logic here
+      console.log(`Direct cashout of $${amount} initiated.`);
+    } else if (method === "promo") {
+      // Handle promo code generation logic here
+      console.log(`Promo code ${promoCode} generated for $${amount}.`);
+    }
+    setCurrentBalance(currentBalance - amount);
+    setCashoutSuccess(true);
+    setTimeout(() => setCashoutSuccess(false), 5000); // Display modal for 5 seconds
   };
 
   if (loading) {
@@ -61,20 +66,16 @@ const RewardsSummary = () => {
         </p>
 
         <EarningsOverview
-          totalCashback={earnings.totalCashback}
-          currentBalance={earnings.currentBalance}
+          totalCashback={mockEarnings.totalCashback}
+          currentBalance={currentBalance}
         />
         <CashbackHistory transactions={transactions} />
         <CashoutOptions
-          onDirectCashout={() => handleCashout("direct")}
-          onPromoCode={() => handleCashout("promo")}
+          currentBalance={currentBalance}
+          onCashout={handleCashout}
         />
-        <Modal
-          isVisible={isModalVisible}
-          onClose={() => setIsModalVisible(false)}
-        >
-          <p>{modalMessage}</p>
-        </Modal>
+
+        {cashoutSuccess && <Modal message="Cashout Successful!" />}
       </div>
     </div>
   );
